@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <script>
+            var dojoConfig = {
+                async: true,
+                packages: [{
+                    name: "js",
+                    location: "/js"
+                }]
+            };
+        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
+        <script type="text/javascript" src="js/core.js"></script>
+    </head>
+    <body>
+        Title: <br><input id="title" placeholder="Title" type="text"></input><br>
+        Description: <br><input id="text" placeholder="Description" type="text"></input><br>
+        Priority:<br> <select id="priority">
+            <option value="High">High</value>
+            <option value="Medium">Medium</value>
+            <option value="Low">Low</value>
+        </select><br>
+        Status: <br><select id="status">
+            <option value="Active">Active</value>
+            <option value="Resolved">Resolved</value>
+            <option value="Closed">Closed</value>
+        </select><br>
+        Tags: <br><input id="tags" placeholder="Tags" type="text"></input><br>
+        Estimate: <br><input id="estimate" placeholder="Estimate" type="text"></input><br>
+        <button id="newTask" type="submit">New Task</button><br>
+
+        <br><br><br>
+        Email: <br><input id="email" placeholder="Email"></input><br>
+        Password: <br><input id="password" placeholder="Password"></input><br>
+        <button id="login" type="submit">Login</button><br>
+        <button id="logout" type="submit">Logout</button><br>
+
+        <br><br><br>
+        Email: <br><input id="newEmail" placeholder="Email"></input><br>
+        Password: <br><input id="newPassword" placeholder="Password"></input><br>
+        First Name: <br><input id="newFirst" placeholder="First Name"></input><br>
+        Last Name: <br><input id="newLast" placeholder="Last Name"></input><br>
+        Display Name: <br><input id="newDisplay" placeholder="Display Name"></input><br>
+        <button id="newUser" type="submit">New User</button><br>
+
+    </body>
+</html>
