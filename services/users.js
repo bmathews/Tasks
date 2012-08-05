@@ -2,9 +2,15 @@ var mongoose = require('mongoose'),
     User = mongoose.model("User");
 
 module.exports = function (app, authMethod) {
-    app.get('/users/all', authMethod, function (req, res) {
+    app.get('/users', authMethod, function (req, res) {
         console.log("get all users");
-        res.send("get all users");
+        User.find({}, function (err, docs) {
+            if (err) {
+                res.send(JSON.stringify(err));
+            } else {
+                res.send(JSON.stringify(docs));
+            }
+        });
     });
 
     app.get('/users/:userId', authMethod, function (req, res) {

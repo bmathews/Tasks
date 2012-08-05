@@ -16,7 +16,6 @@ var mongoose = require('mongoose'),
         tags: [String],
         number: Number,
         status: { type: String, enum: ['Active', 'Resolved', 'Closed'] }
-        //modifications: [ { type: Schema.ObjectId, ref: 'Modification' } ]
     });
 
 mongoose.model("Task", Task);

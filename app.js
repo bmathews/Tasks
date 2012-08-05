@@ -25,9 +25,29 @@ fs.readdirSync('./model').forEach(function (path) {
     require('./model/' + path);
 });
 
+
+activityBuilder = function (object) {
+    console.log("building activity");
+    var Activity = mongoose.model("Activity");
+    var activity = new Activity();
+    activity.verb = object.verb;
+    activity.actor = object.actor;
+    activity.target = object.target;
+    activity.object = object.object;
+    activity.streams = object.streams;
+    activity.save(function (err, doc) {
+        if (err) {
+            console.log(JSON.stringify(err));
+        } else {
+            console.log(JSON.stringify(doc));
+        }
+    });
+}
+
+
 //init services
 fs.readdirSync('./services').forEach(function (path) {
-    require('./services/' + path)(app, authMethod);
+    require('./services/' + path)(app, authMethod, activityBuilder);
 });
 
 app.listen(3000);

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css"/>
+        <script>
+            var dojoConfig = {
+                async: true,
+                packages: [{
+                    name: "js",
+                    location: "/js"
+                }]
+            };
+        </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
+        <script>
+            
+            require(["dojo/query", "dojo/_base/lang"], function (query, lang) {
+                window.login = function () {
+                    var req = new XMLHttpRequest(),
+                        data = {
+                            email: query("#email")[0].value,
+                            password: query("#password")[0].value
+                        };
+                    req.open("POST", "/session/new", true);
+                    req.setRequestHeader('Content-Type', 'application/json');
+                    req.onreadystatechange = lang.hitch(this, function () {
+                        if (req.readyState === 4) {
+                            console.log(req.response);
+                        }
+                    });
+                    req.send(JSON.stringify(data));
+                };
+
+                window.newTask = function () {
+                    var req = new XMLHttpRequest(),
+                        data = {
+                            sprint: "501803043f70a4025b000001",
+                            assigned: "5018038ddba655285b000001",
+                            project: "501800acf5609bab5a000001",
+                            title: query("#title")[0].value,
+                            text: query("#text")[0].value,
+                            priority: query("#priority")[0].value,
+                            status: query("#status")[0].value,
+                            estimate: query("#estimate")[0].value,
+                            tags: [query("#tags")[0].value]
+                        };
+                    req.open("POST", "/tasks/new", true);
+                    req.setRequestHeader('Content-Type', 'application/json');
+                    req.onreadystatechange = lang.hitch(this, function () {
+                        console.log(req.response);
+                    });
+                    req.send(JSON.stringify(data));
+                };
+
+                window.newUser = function () {
+                    var req = new XMLHttpRequest(),
+                        data = {
+                            email: query("#newEmail")[0].value,
+                            password: query("#newPassword")[0].value,
+                            firstName: query("#newFirst")[0].value,
+                            lastName: query("#newLast")[0].value,
+                            displayName: query("#newDisplay")[0].value
+                        };
+                    req.open("POST", "/users/new", true);
+                    req.setRequestHeader('Content-Type', 'application/json');
+                    req.onreadystatechange = lang.hitch(this, function () {
+                        if (req.readyState === 4) {
+                            console.log(req.response);
+                        }
+                    });
+                    req.send(JSON.stringify(data));
+                };
+            });
+                
+        </script>
+    </head>
+    <body style="margin: 20px" >
+        Title: <br><input id="title" placeholder="Title" type="text"></input><br>
+        Description: <br><input id="text" placeholder="Description" type="text"></input><br>
+        Priority:<br> <select id="priority">
+            <option value="High">High</value>
+            <option value="Medium">Medium</value>
+            <option value="Low">Low</value>
+        </select><br>
+        Status: <br><select id="status">
+            <option value="Active">Active</value>
+            <option value="Resolved">Resolved</value>
+            <option value="Closed">Closed</value>
+        </select><br>
+        Tags: <br><input id="tags" placeholder="Tags" type="text"></input><br>
+        Estimate: <br><input id="estimate" placeholder="Estimate" type="text"></input><br>
+        <button onclick="newTask()" class="btn btn-success" id="newTask" type="submit">New Task</button><br>
+
+        <br><br><br>
+        Email: <br><input id="email" type="text" placeholder="Email"></input><br>
+        Password: <br><input id="password" type="text" placeholder="Password"></input><br>
+        <button onclick="login()" class="btn btn-primary" id="login" type="submit">Login</button><br>
+        <button onclick="logout()" class="btn" id="logout" type="submit">Logout</button><br>
+
+        <br><br><br>
+        Email: <br><input id="newEmail" type="text" placeholder="Email"></input><br>
+        Password: <br><input id="newPassword" type="text" placeholder="Password"></input><br>
+        First Name: <br><input id="newFirst" type="text" placeholder="First Name"></input><br>
+        Last Name: <br><input id="newLast" type="text" placeholder="Last Name"></input><br>
+        Display Name: <br><input id="newDisplay" type="text" placeholder="Display Name"></input><br>
+        <button onclick="newUser()" class="btn btn-success" id="newUser" type="submit">New User</button><br>
+
+        <br><br><br>
+
+    </body>
+</html>

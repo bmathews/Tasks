@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
-    Task = mongoose.model("Task");
+    Task = mongoose.model("Task"),
+    Project = mongoose.model("Project");
 
-module.exports = function (app, authMethod) {
+module.exports = function (app, authMethod, activityBuilder) {
     app.get('/tasks', authMethod, function (req, res) {
         Task.find({})
         .populate('author')
@@ -37,7 +38,7 @@ module.exports = function (app, authMethod) {
     app.post('/tasks/new', authMethod, function (req, res) {
         console.log("post task");
         var task = new Task();
-        task.author = req.body.author;
+        task.author = req.session.userId;
         task.sprint = req.body.sprint;
         task.assigned = req.body.assigned;
         task.project = req.body.project;
@@ -55,6 +56,21 @@ module.exports = function (app, authMethod) {
             if (err) {
                 res.send("error");
             } else {
+                activityBuilder({
+                    verb: "posted",
+                    actor: req.session.userId,
+                    object: {
+                        objectType: "Task",
+                        objectId: doc.id,
+                        displayName: doc.title
+                    },
+                    target: {
+                        objectType: "Project",
+                        objectId: doc.project,
+                        displayName: "PE2E"
+                    },
+                    streams: ["tasks"]
+                });
                 res.send(JSON.stringify(doc));
             }
         });
